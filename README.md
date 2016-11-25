@@ -4,7 +4,7 @@
 
 ## Table of Contents
 
-### Lesson 1:  Set up NginX
+### Lesson 1:  Set up a web service
 * [Add Initial NginX Container](../01-add-nginx/docs/01-add-nginx-container.md)
 
 
