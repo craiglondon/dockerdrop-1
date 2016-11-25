@@ -1,6 +1,6 @@
 # DockerDrop, a training site for Docker for Development with Drupal
 
-* [Prerequisites](../develop/docs/prerequisites.md)
+* [Prerequisites](../docs/prerequisites.md)
 
 ## Table of Contents
 
