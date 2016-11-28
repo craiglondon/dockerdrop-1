@@ -2,15 +2,13 @@
 
 ## Lesson 1:  Set up a web service
 
-### Step 1:  ADD Initial NginX container
-
-#### 1: Create a file called `docker-compose.yml` in the root of your project.
+### 1: Create a file called `docker-compose.yml` in the root of your project.
 
 This file will contain all information about the services, networks and volumes that will make up your development environment stack.  As we progress with this project, we will modify this file to modify services, define additional ones, add volumes and configure each volume and service to work together to build a viable development stack for our project.
 
-#### 2.  Open the file in your favorite IDE or editor
+### 2.  Open the file in your favorite IDE or editor
 
-#### 3.  Add the following line to the top of the file:
+### 3.  Add the following line to the top of the file:
 
 `version: '2'`
 
@@ -18,7 +16,7 @@ This key designates which version of docker-compose file format that our `.yml` 
 
 If you see a `docker-compose.yml` file without a version key, it is a `version 1` docker-compose file.  These files are considered deprecated, and support for `version ` docker-compose.yml files will be removed eventually.  `Version 2` is the current recommended format.  It requires that you are running Docker Engine version 1.10.0 or greater.  To designate a `docker-compose.yml` file as compliant with `Version 2`, you must explicitely include this line in your `.yml` file.
 
-#### 4.  Next add a `services` key below the `version` key
+### 4.  Next add a `services` key below the `version` key
 
 Add the following line below the `version` key in your `docker-compose.yml` file:
 
@@ -28,7 +26,7 @@ services:
  
 A Docker service is an instance of a Docker image that is used in your stack for a specific purpose.  Each service will provide a specific, isolated application in the overall configuration, and will be granted permission through configuration settings included in your `docker-compose.yml` file to interact with other service containers in the stack.  This concept is referred to as `application containerization`, and is a operating system level virtualization method for deploying and running distributed applications without launching an entire virtualization environment such as a virtual machine.  Each container houses all the components such as files, environment variables and libraries necessary to run the its application. 
  
-#### 5.  Next add a `web` service key below the `services` key, and define your web service as follows:
+### 5.  Next add a `web` service key below the `services` key, and define your web service as follows:
 
 ~~~
   web:
@@ -43,7 +41,7 @@ The `ports` key configures the mapping of `external` ports to `internal` ports f
 
 Our configuration is mapping port `8000` on our host system to the internally exposed port `80` on our NginX container.
 
-#### 6.  Next, let's launch the services we've define in our stack with Docker Compose.
+### 6.  Next, let's launch the services we've define in our stack with Docker Compose.
 
 Execute the following command:
 
@@ -53,7 +51,7 @@ Execute the following command:
 
 By default, `docker-compose up` runs a service interactively, and when the command exits, the services that were launched with that command are terminated.  For a service such as a web service that needs to persist, this is not a desired behavior.  Because of that, there is a parameter, `-d` that can be passed when executing this command that will launch the services defined in your `docker-compose.yml` file as background services, and those services that need to persist (such as our `web` service) after execution of the `docker-compose` command ends will continue to run in the background.
 
-#### 7.  Finally, let's see if our web service is running an NginX web server.  
+### 7.  Finally, let's see if our web service is running an NginX web server.  
 
 Through our port mapping, we can access this service from our host environment on port `8000`.  Launch a web browser, navigate to `http://localhost:8000`, and you should see the default NginX welcome page:
 
