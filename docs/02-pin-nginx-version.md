@@ -10,7 +10,7 @@ Open the `docker-compose.yml` file and take a look at the following line:
     image: nginx:latest
 ~~~
 
-This line designates the image to be used in this build.  The format of this line is <container>:<version>.  For Docker containers, the "latest" version is usually the "bleeding edge" image, and is subject to change.
+This line designates the image to be used in this build.  The format of this line is `<container>:<version>`.  For Docker containers, the "latest" version is usually the "bleeding edge" image, and is subject to change.
 
 ### 2:  Edit the line from Step 1 to pin it to version 1.10.2
 
@@ -73,3 +73,6 @@ docker rmi 05a60462f8ba <== replace hash
 ~~~
 
 Now when you issue the command `docker images` you should only see the `nginx:1.10.2` image.
+
+
+<a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />The instructional materials, which includes any materials in this repository included in markdown (.md) and/or text (.txt) files, are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
