@@ -15,6 +15,7 @@ services:
       - 9000
     volumes:
       - ./web:/var/www/html/web
+<<<<<<< HEAD
 
   db:
     image: mariadb:10.1.19
@@ -31,3 +32,5 @@ services:
 volumes:
   mysql-data:
     driver: local
+=======
+>>>>>>> Lesson 3:  Adding a PHP container
