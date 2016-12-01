@@ -35,8 +35,8 @@ macOS 10.10.3 Yosemite or newer
 * Install Docker for Windows:  https://docs.docker.com/engine/installation/windows/
 
 Note:
-* > 64bit Windows 10 Pro, Enterprise and Education (1511 November update, Build 10586 or later).
-* > The Hyper-V package must be enabled. The Docker for Windows installer will enable it for you, if needed.
+> * 64bit Windows 10 Pro, Enterprise and Education (1511 November update, Build 10586 or later).
+> * The Hyper-V package must be enabled. The Docker for Windows installer will enable it for you, if needed.
 
 ### All Users
 
