@@ -1,6 +1,22 @@
 version: '2'
 services:
   web:
-    image: nginx:1.10.2
+    build: ./docker/nginx/
     ports:
-        - 8000:80
+      - "8000:80"
+    volumes_from:
+      - php
+    depends_on:
+      - php
+    environment:
+      NGINX_DOCROOT: www/web
+      NGINX_SERVER_NAME: localhost
+      # Set to the same as the PHP_POST_MAX_SIZE, but use lowercase "m"
+      NGINX_MAX_BODY_SIZE: 16m
+
+  php:
+    image: php:7.0-fpm
+    expose:
+      - 9000
+    volumes:
+      - ./web:/var/www/html/web
