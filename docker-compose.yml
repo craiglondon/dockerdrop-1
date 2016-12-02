@@ -10,11 +10,13 @@ services:
       - php
 
   php:
-    image: php:7.0-fpm
+    build: ./docker/php/
     expose:
       - 9000
     volumes:
       - ./web:/var/www/html/web
+    depends_on:
+      - db
 
   db:
     image: mariadb:10.1.19
@@ -26,7 +28,7 @@ services:
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
     volumes:
       - mysql-data:/var/lib/mysql
-      - .db:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+      - ./db:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
 
 volumes:
   mysql-data:
