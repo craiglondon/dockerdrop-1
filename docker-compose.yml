@@ -8,15 +8,30 @@ services:
       - php
     depends_on:
       - php
+    environment:
+      NGINX_DOCROOT: web
+      NGINX_SERVER_NAME: localhost
+      # Set to the same as the PHP_POST_MAX_SIZE, but use lowercase "m"
+      NGINX_MAX_BODY_SIZE: 16m
 
   php:
     build: ./docker/php/
     expose:
       - 9000
     volumes:
-      - ./web:/var/www/html/web
+      - .:/var/www/html
     depends_on:
       - db
+    environment:
+      PHP_SITE_NAME: dev
+      PHP_HOST_NAME: localhost:8000
+      PHP_DOCROOT: web
+      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      PHP_MEMORY_LIMIT: 256M
+      #if you use this, make sure you set the NGINX_MAX_BODY_SIZE to the same,
+      #but use a lowercase "m" instead of an uppercase "M"
+      PHP_POST_MAX_SIZE: 16M
+      PHP_UPLOAD_MAX_FILESIZE: 16M
 
   db:
     image: mariadb:10.1.19
@@ -29,6 +44,11 @@ services:
     volumes:
       - mysql-data:/var/lib/mysql
       - ./db:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+
+  mailhog:
+    image: mailhog/mailhog:latest
+    ports:
+      - "8002:8025"
 
 volumes:
   mysql-data:
