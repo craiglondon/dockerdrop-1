@@ -9,7 +9,7 @@ services:
     depends_on:
       - php
     environment:
-      NGINX_DOCROOT: web
+      NGINX_DOCROOT: www/web
       NGINX_SERVER_NAME: localhost
       # Set to the same as the PHP_POST_MAX_SIZE, but use lowercase "m"
       NGINX_MAX_BODY_SIZE: 16m
@@ -24,17 +24,17 @@ services:
       - db
     environment:
       PHP_SITE_NAME: dev
-      PHP_HOST_NAME: localhost:8000
-      PHP_DOCROOT: web
-      PHP_SENDMAIL_PATH: /usr/sbin/sendmail -t -i -S mailhog:1025
+      PHP_HOST_NAME: localhost:8000  #Match the host port on NginX
+      PHP_DOCROOT: www/web
       PHP_MEMORY_LIMIT: 256M
-      #if you use this, make sure you set the NGINX_MAX_BODY_SIZE to the same,
-      #but use a lowercase "m" instead of an uppercase "M"
+      PHP_MAX_EXECUTION_TIME: 60
+      # if you use PHP_POST_MAX_SIZE, make sure you set the NGINX_MAX_BODY_SIZE
+      # to the same, but use a lowercase "m" instead of an uppercase "M"
       PHP_POST_MAX_SIZE: 16M
       PHP_UPLOAD_MAX_FILESIZE: 16M
 
   db:
-    image: mariadb:10.1.19
+    image: mysql:5.6.34
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: drupal
@@ -43,12 +43,28 @@ services:
     command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci # The simple way to override the mariadb config.
     volumes:
       - mysql-data:/var/lib/mysql
-      - ./db:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
+      - ./data:/docker-entrypoint-initdb.d # Place init .sql file(s) here.
 
   mailhog:
     image: mailhog/mailhog:latest
+    expose:
+     - "1025"
     ports:
       - "8002:8025"
+
+  selenium:
+    image: selenium/standalone-firefox:2.53.0
+
+  pma:
+    image: phpmyadmin/phpmyadmin
+    environment:
+      PMA_HOST: db
+      PMA_USER: drupal
+      PMA_PASSWORD: drupal
+      PHP_UPLOAD_MAX_FILESIZE: 1G
+      PHP_MAX_INPUT_VARS: 1G
+    ports:
+      - "8001:80"
 
 volumes:
   mysql-data:
