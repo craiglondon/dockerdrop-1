@@ -1,0 +1,29 @@
+default:
+  suites:
+    default:
+      paths:
+        - %paths.base%/features/default
+      contexts:
+        - FeatureContext
+        - Drupal\DrupalExtension\Context\DrupalContext
+        - Drupal\DrupalExtension\Context\MinkContext
+        - Drupal\DrupalExtension\Context\MessageContext
+        - Drupal\DrupalExtension\Context\DrushContext
+  extensions:
+    Behat\MinkExtension:
+      goutte: ~
+      selenium2:
+        browser: 'firefox'
+        wd_host: selenium:4444/wd/hub
+      base_url: http://nginx
+    Drupal\DrupalExtension:
+      blackbox: ~
+      api_driver: 'drupal'
+      drush:
+        alias: 'dev'
+      drupal:
+        drupal_root: '/var/www/html/www/web'
+      region_map:
+        footer: "#footer"
+        content: ".content"
+        taxonomy: "#taxonomy"
