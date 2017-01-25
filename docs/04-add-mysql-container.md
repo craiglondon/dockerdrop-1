@@ -70,7 +70,7 @@ When we spin down our application stack with `docker-compose down`, our MySQL co
 
 ### 6.  Add a shared data volume for a seed database
 
-When our MySQL container is started for the first time, a new database with the name `drupal` will be created and initialized with the provided configuration variables for the username and password.  Furthermore, it will execute files with extensions When a container is started for the first time, a new database with the specified name will be created and initialized with the provided configuration variables. Furthermore, it will execute files with extensions `.sh`, `.sql` and `.sql.gz` that are found in the internal path `/docker-entrypoint-initdb.d`.
+When a container is started for the first time, a new database with the specified name will be created and initialized with the provided configuration variables. Furthermore, it will execute files with extensions `.sh`, `.sql` and `.sql.gz` that are found in the internal path `/docker-entrypoint-initdb.d`.
 
 We can use this information to map a shared data volume where we can place a seed database (which we'll create later) that will be imported into our designated database, `drupal`, when our MySQL container starts.
 
