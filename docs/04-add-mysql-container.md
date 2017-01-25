@@ -27,7 +27,7 @@ Below the above image declaration, add the following:
       MYSQL_PASSWORD: drupal
 ~~~
 
-This sets the root user password for our MySQL installation to `root`, and sets the username, password and databae name for our application database to `drupal`.
+This sets the root user password for our MySQL installation to `root`, and sets the username, password and database name for our application database to `drupal`.
 
 ### 3. Add MySQL startup command line options
  
