@@ -48,7 +48,7 @@ Notice the 4th line of the output above:
 386a066cd84a: Already exists
 ~~~
 
-When Docker downloads an image, that image is comprised of several "layers", that comprise different components that make up a particular image.  Each "layer" is stored on Docker Hub with a hash.  Whenever possible Docker will "reuse" layers across multiple containers.  In our case, both the "latest" vesion and version "1.10.2" start with the official "debian/jessie" Docker image, so naturally there will be some commonality between the two.  Since we had started with the "latest" image in our build, Docker had already downloaded the layers for the `nginx:latest` image and cached them locally.  There is one layer that is common between `nginx:latest` and `nginx:1.10.2`, which Docker identified via its hash, so Docker doesn't download that layer again; it simply downloads the ones where there are differences.
+When Docker downloads an image, that image is comprised of several "layers", that comprise different components that make up a particular image.  Each "layer" is stored on Docker Hub with a hash.  Whenever possible Docker will "reuse" layers across multiple containers.  In our case, both the "latest" version and version "1.10.2" start with the official "debian/jessie" Docker image, so naturally there will be some commonality between the two.  Since we had started with the "latest" image in our build, Docker had already downloaded the layers for the `nginx:latest` image and cached them locally.  There is one layer that is common between `nginx:latest` and `nginx:1.10.2`, which Docker identified via its hash, so Docker doesn't download that layer again; it simply downloads the ones where there are differences.
 
 ### 4:  Delete the `nginx:latest` image from your cache
 
