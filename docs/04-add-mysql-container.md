@@ -31,7 +31,7 @@ This sets the root user password for our MySQL installation to `root`, and sets 
 
 ### 3. Add MySQL startup command line options
  
-We can also add "command line" options when we start our MySQL container and create our database that consist of any options you would normally configure for your MySQL database instance.  In our case, we're going to set the "character set" an "collation" parameters for our database.
+We can also add "command line" options when we start our MySQL container and create our database that consist of any options you would normally configure for your MySQL database instance.  In our case, we're going to set the "character set" and "collation" parameters for our database.
 
 Add the following below the `environment` tag:
 
