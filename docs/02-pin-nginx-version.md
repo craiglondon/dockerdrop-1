@@ -12,12 +12,12 @@ Open the `docker-compose.yml` file and take a look at the following line:
 
 This line designates the image to be used in this build.  The format of this line is `<container>:<version>`.  For Docker containers, the "latest" version is usually the "bleeding edge" image, and is subject to change.
 
-### 2:  Edit the line from Step 1 to pin it to version 1.10.2
+### 2:  Edit the line from Step 1 to pin it to version 1.10.3
 
 Edit the line from Step 1 to read as follows:
 
 ~~~
-    image: nginx:1.10.2
+    image: nginx:1.10.3
 ~~~
 
 This "pins" your stack build to use this specific version of the official NginX container.  The available versions can be seen on Docker Hub, at `https://hub.docker.com/r/library/nginx/tags/`.
@@ -32,13 +32,13 @@ You should have seen output similar to the following:
 
 ~~~
 Creating network "dockerdrop_default" with the default driver
-Pulling web (nginx:1.10.2)...
-1.10.2: Pulling from library/nginx
+Pulling web (nginx:1.10.3)...
+1.10.3: Pulling from library/nginx
 386a066cd84a: Already exists
 21413bff969a: Pull complete
 eee080e089c4: Pull complete
 Digest: sha256:eb7e3bbd8e3040efa71d9c2cacfa12a8e39c6b2ccd15eac12bdc49e0b66cee63
-Status: Downloaded newer image for nginx:1.10.2
+Status: Downloaded newer image for nginx:1.10.3
 Creating dockerdrop_web_1
 ~~~
 
@@ -62,7 +62,7 @@ You should see something similar to the following:
 
 ~~~
 REPOSITORY          TAG                 IMAGE ID            CREATED             SIZE
-nginx               1.10.2              5acd1b9bc321        2 weeks ago         180.7 MB
+nginx               1.10.3              5acd1b9bc321        2 weeks ago         180.7 MB
 nginx               latest              05a60462f8ba        2 weeks ago         181.5 MB
 ~~~
 
@@ -72,7 +72,7 @@ The IMAGE ID is the hash assigned to each image stored in your local cache.  To 
 docker rmi 05a60462f8ba <== replace hash
 ~~~
 
-Now when you issue the command `docker images` you should only see the `nginx:1.10.2` image.
+Now when you issue the command `docker images` you should only see the `nginx:1.10.3` image.
 
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />The instructional materials, which includes any materials in this repository included in markdown (.md) and/or text (.txt) files, are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
