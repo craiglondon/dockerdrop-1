@@ -1,5 +1,7 @@
 # DockerDrop, a training site for Docker for Development with Drupal
 
+[![Build Status](https://travis-ci.org/codementality/dockerdrop.svg?branch=develop)](https://travis-ci.org/codementality/dockerdrop)
+
 * [Prerequisites](../develop/docs/prerequisites.md)
 
 ## Table of Contents
