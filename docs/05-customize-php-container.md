@@ -50,7 +50,6 @@ RUN apt-get update && apt-get install -y \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
         libpng12-dev \
-        vim \
         unzip \
         zip \
         mariadb-client \
@@ -164,7 +163,6 @@ ENTRYPOINT /usr/local/bin/docker-entrypoint.sh
 ~~~
 
 ### 5:  Modify the `docker-compose.yml` file to use our custom image definition instead of the "official" image
->>>>>>> 05-customize-php-container
 
 Open `docker-compose.yml`, and replace the following:
 
@@ -185,7 +183,7 @@ with:
     expose:
       - 9000
     volumes:
-      - .:/var/www/html
+      - .:/var/www/html/web
     depends_on:
       - db
     environment:
@@ -289,6 +287,7 @@ RUN php -r "readfile('https://s3.amazonaws.com/files.drush.org/drush.phar');" > 
     && chmod +x drush \
     && mv drush /usr/local/bin \
     && drush init -y
+
 
 # Add default drush aliases
 RUN mkdir -p /etc/drush/site-aliases

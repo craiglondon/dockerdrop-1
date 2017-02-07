@@ -37,11 +37,11 @@ A Docker service is an instance of a Docker image that is used in your stack for
 
 The `image` key designates which docker image to use to launch this particular service (in this case the web server, which is designated as the `web` service).
 
-The `ports` key configures the mapping of `external` ports to `internal` ports for this service.  The `nginx` container's Dockerfile exposes an internal port, port 80, to external services.  On the external operating system, we can control which ports our host operating system uses to access the service container's services by mapping one of the available ports on our host system to the internally exposed port on the service container.  We will look at the structure of a Dockerfile a bit later.
+The `ports` key configures the mapping of `external` (host) ports to `internal` (container) ports for this service.  The `nginx` container's Dockerfile exposes an internal port, port 80, to the docker network layer and services running in othr containers on the Docker network.  On the host operating system, we can control which ports our host operating system uses to access the service container's services by mapping one of the available ports on our host system to the internally exposed port on the service container.  We will look at the structure of a Dockerfile a bit later.
 
 Our configuration is mapping port `8000` on our host system to the internally exposed port `80` on our NginX container.
 
-### 6.  Next, let's launch the services we've define in our stack with Docker Compose.
+### 6.  Next, let's launch the services we've defined in our stack with Docker Compose.
 
 Execute the following command:
 

@@ -58,6 +58,12 @@ RUN php -r "readfile('https://s3.amazonaws.com/files.drush.org/drush.phar');" > 
 RUN mkdir -p /etc/drush/site-aliases
 COPY default.aliases.drushrc.php /etc/drush/site-aliases/
 
+# Install Mailhog Sendmail support:
+RUN apt-get update -qq && apt-get install -yq git golang-go \
+    && mkdir -p /opt/go \
+    && export GOPATH=/opt/go \
+    && go get github.com/mailhog/mhsendmail
+
 # Add php.ini base file
 COPY php.ini /usr/local/etc/php/conf.d/php.ini
 
