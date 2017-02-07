@@ -5,11 +5,11 @@ init:
 	docker-compose ps
 	docker-compose exec -T php composer update --working-dir=/var/www/html/www
 	-make update-tests
-	chmod a+w www/sites/default
-	cp config/settings/settings.php www/sites/default/settings.php
-	cp config/settings/local.settings.php www/sites/default/local.settings.php
-	mkdir www/sites/default/files
-	chmod a+w www/sites/default/files
+	docker-compose exec -T php chmod a+w /var/www/html/www/sites/default
+	docker-compose exec -T php cp config/settings/settings.php www/sites/default/settings.php
+	docker-compose exec -T php cp config/settings/local.settings.php www/sites/default/local.settings.php
+	if [ ! -d "www/sites/default/files" ]; then docker-compose exec -T php mkdir /var/www/html/www/sites/default/files; fi
+	docker-compose exec -T php chmod a+w /var/www/html/www/sites/default/files
 	@make provision
 
 download-seed-db:
