@@ -40,7 +40,7 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
     && mkdir /var/www/docroot \
     && chown -Rf www-data:www-data /var/www
 
-RUN php -r "readfile('https://s3.amazonaws.com/files.drush.org/drush.phar');" > drush \
+RUN php -r "readfile('https://s3.amazonaws.com/files.drush.org/drush-unstable.phar');" > drush \
     && chmod +x drush \
     && mv drush /usr/local/bin \
     && drush init -y
