@@ -3,6 +3,7 @@ init:
 	docker-compose up -d --build
 	echo "Waiting for database to initialize"; sleep 15
 	docker-compose ps
+	docker-compose exec -T php composer require drush/drush:8.* -n --working-dir=/var/www/html/www
 	docker-compose exec -T php composer update --working-dir=/var/www/html/www
 	-make update-tests
 	docker-compose exec -T php chmod a+w /var/www/html/www/sites/default
@@ -12,10 +13,9 @@ init:
 	docker-compose exec -T php chmod a+w /var/www/html/www/sites/default/files
 ifdef TRAVIS
 	docker-compose exec php /bin/bash -c "chown -Rf 1000:1000 /var/www"
-	docker-compose exec -T php drush init -y
 endif
 	docker-compose exec -T php /bin/bash -c "ls -l /var/www/html/www"
-	docker-compose exec -T php drush @default.dev status
+	docker-compose exec -T php vendor/bin/drush @default.dev status
 	@make provision
 
 download-seed-db:
@@ -27,15 +27,15 @@ down:
 
 provision:
 	@echo "Running database updates..."
-	@docker-compose exec -T php drush @default.dev updb
+	@docker-compose exec -T php vendor/bin/drush @default.dev updb
 	@echo "Running entity updates..."
-	@docker-compose exec -T php drush @default.dev entup
+	@docker-compose exec -T php vendor/bin/drush @default.dev entup
 	@echo "Importing configuration..."
-	@docker-compose exec -T php drush @default.dev cim
+	@docker-compose exec -T php vendor/bin/php drush @default.dev cim
 	@echo "Running reverting features..."
-	-docker-compose exec -T php drush @default.dev fra
+	-docker-compose exec -T php vendor/bin/drush @default.dev fra
 	@echo "Resetting cache..."
-	@docker-compose exec -T php drush @default.dev cr
+	@docker-compose exec -T php vendor/bin/drush @default.dev cr
 
 phpcs:
 	docker-compose exec -T php tests/bin/phpcs --config-set installed_paths tests/vendor/drupal/coder/coder_sniffer
