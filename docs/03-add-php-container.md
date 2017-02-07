@@ -17,7 +17,7 @@ Open `docker-compose.yml` in your favorite editor and add the following lines fo
 
 ~~~
   php:
-    image: php:7.0.13-fpm
+    image: php:7.1-fpm
     expose:
       - 9000
     volumes:
@@ -25,7 +25,7 @@ Open `docker-compose.yml` in your favorite editor and add the following lines fo
 
 ~~~
 
-Note that we are pinning our PHP container to version `7.0.13-fpm`.
+Note that we are pinning our PHP container to version `7.1-fpm`.
 
 The PHP images don't expose port 9000 by default, so we specify it ourselves in our configuration settings.
 
@@ -44,6 +44,9 @@ Now that we're adding another container to our stack, our two containers need to
 Create a file in the `docker/nginx` directory called `default.conf`, and put the following in it:
 
 ~~~
+# Let's redirect https requests to http; you'll want to modify this if you
+# need to test over https
+
 server {
     listen 443;
     listen [::]:443;
@@ -52,10 +55,12 @@ server {
 }
 
 server {
+    server_name SERVER_NAME;
+
     listen 80 default_server;
     listen [::]:80 default_server;
 
-    root /var/www/html/web;
+    root /var/www/html;
     index index.html index.php;
 
     charset utf-8;
@@ -80,8 +85,7 @@ server {
 
     sendfile off;
 
-
-    client_max_body_size 8m;
+    client_max_body_size MAX_BODY_SIZE;
 
     location ~ \..*/.*\.php$ {
         return 403;
@@ -158,6 +162,7 @@ server {
         deny all;
     }
 }
+
 ~~~
 
 Save this file.
@@ -174,9 +179,18 @@ FROM nginx:1.10.2
 MAINTAINER Lisa Ridley "lhridley@gmail.com"
 
 COPY ./default.conf /etc/nginx/conf.d/default.conf
+
+# Add entrypoint script
+COPY docker-entrypoint.sh /usr/local/bin/
+RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
+
+ENTRYPOINT /usr/local/bin/docker-entrypoint.sh
+
 ~~~
 
 What we are doing here is creating a custom Docker container that is based on the nginx:1.10.2 container.  We are tagging ourselves as the maintainer, and we specify that we want to copy our `default.conf` file over the one supplied by NginX.
+
+We are also adding a custom entrypoint script, which we'll create in a minute.
 
 That was easy enough.
 
@@ -192,6 +206,17 @@ with this:
 ~~~
 
 We've basically just instructed docker-compose to build a web container from the Dockerfile we defined when we start our stack.
+
+Now, let's add some environment variables for our NginX container, the values from which are used in our entrypoint script.  Add the following to your `docker-compose.yml` file under the `web` service tag:
+
+~~~
+    environment:
+      NGINX_DOCROOT: www/web
+      NGINX_SERVER_NAME: localhost
+      # Set to the same as the PHP_POST_MAX_SIZE, but use lowercase "m"
+      NGINX_MAX_BODY_SIZE: 16m
+
+~~~
 
 Now, we need to share the volume from our PHP container with our NginX container so that it knows what to serve up when it starts.  Modify your web service in your docker-compose file to read as follows:
 
@@ -236,6 +261,11 @@ services:
       - php
     depends_on:
       - php
+    environment:
+      NGINX_DOCROOT: web
+      NGINX_SERVER_NAME: localhost
+      # Set to the same as the PHP_POST_MAX_SIZE, but use lowercase "m"
+      NGINX_MAX_BODY_SIZE: 16m
 
   php:
     image: php:7.0-fpm

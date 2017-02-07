@@ -13,6 +13,7 @@
 ### Lesson 3:  Add a PHP container, and configure the web and php containers to share resources
 * [Add a PHP Container to our stack](../03-add-php-container/docs/03-add-php-container.md)
 
+<<<<<<< HEAD
 ### Lesson 4:  Add a MySQL container with a data volume
 * [Add a MySQL Container to our stack](../04-add-mysql-container/docs/04-add-mysql-container.md)
 
