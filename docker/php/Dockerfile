@@ -1,4 +1,4 @@
-FROM php:7.0-fpm
+FROM php:7.1-fpm
 
 MAINTAINER Lisa Ridley "lhridley@gmail.com"
 
@@ -7,7 +7,6 @@ RUN apt-get update && apt-get install -y \
         libjpeg62-turbo-dev \
         libmcrypt-dev \
         libpng12-dev \
-        vim \
         unzip \
         zip \
         mariadb-client \
@@ -26,6 +25,30 @@ RUN php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');" \
     && mv composer.phar /usr/local/bin/composer
 
 # Add Drush Globally
+    && docker-php-ext-install zip
+
+# Register the COMPOSER_HOME environment variable
+# Add global binary directory to PATH and make sure to re-export it
+# Allow Composer to be run as root
+# Composer version
+ENV COMPOSER_HOME /composer
+ENV PATH /composer/vendor/bin:$PATH
+ENV COMPOSER_ALLOW_SUPERUSER 1
+ENV COMPOSER_VERSION 1.2.0
+
+# Setup the Composer installer
+RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
+    && curl -o /tmp/composer-setup.sig https://composer.github.io/installer.sig \
+    && php -r "if (hash('SHA384', file_get_contents('/tmp/composer-setup.php')) !== trim(file_get_contents('/tmp/composer-setup.sig'))) { unlink('/tmp/composer-setup.php'); echo 'Invalid installer' . PHP_EOL; exit(1); }" \
+
+# Install Composer
+    && php /tmp/composer-setup.php --no-ansi --install-dir=/usr/local/bin --filename=composer --version=${COMPOSER_VERSION} && rm -rf /tmp/composer-setup.php \
+# Install Prestissimo plugin for Composer -- allows for parallel processing of packages during install / update
+    && composer global require "hirak/prestissimo:^0.3" \
+    && chown -Rf www-data:www-data /composer \
+    && mkdir /var/www/docroot \
+    && chown -Rf www-data:www-data /var/www
+
 RUN php -r "readfile('https://s3.amazonaws.com/files.drush.org/drush.phar');" > drush \
     && chmod +x drush \
     && mv drush /usr/local/bin \
