@@ -8,7 +8,7 @@ Open `docker-compose.yml` in your favorite editor and insert the following under
 
 ~~~
   db:
-    image: mariadb:10.1.19
+    image: mariadb:10.1.21
 ~~~
 
 What we've done is add a MariaDB container to our application stack, and pinned it to version 10.1.19.
