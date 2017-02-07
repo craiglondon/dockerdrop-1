@@ -18,4 +18,5 @@ if [ -n "$PHP_UPLOAD_MAX_FILESIZE" ]; then
      sed -i 's@^;upload_max_filesize.*@'"upload_max_filesize = ${PHP_UPLOAD_MAX_FILESIZE}"'@' /usr/local/etc/php/conf.d/php.ini
 fi
 
-exec "$@"
+#exec "$@"
+exec php-fpm

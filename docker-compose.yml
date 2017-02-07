@@ -5,11 +5,11 @@ services:
     ports:
       - "8000:80"
     volumes:
-      - ./web:/var/www/html/web
+      - .:/var/www/html
     depends_on:
       - php
     environment:
-      NGINX_DOCROOT: web
+      NGINX_DOCROOT: www
       NGINX_SERVER_NAME: localhost
       # Set to the same as the PHP_POST_MAX_SIZE, but use lowercase "m"
       NGINX_MAX_BODY_SIZE: 20m
@@ -19,7 +19,7 @@ services:
     expose:
       - 9000
     volumes:
-      - .:/var/www/html/web
+      - .:/var/www/html
     depends_on:
       - db
     environment:
