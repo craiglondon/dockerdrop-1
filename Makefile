@@ -10,7 +10,10 @@ init:
 	docker-compose exec -T php cp config/settings/local.settings.php www/sites/default/local.settings.php
 	if [ ! -d "www/sites/default/files" ]; then docker-compose exec -T php mkdir /var/www/html/www/sites/default/files; fi
 	docker-compose exec -T php chmod a+w /var/www/html/www/sites/default/files
-	docker-compose exec php /bin/bash -c "cd /var/www/html/www; ls -l"
+ifdef TRAVIS
+	docker-compose exec php /bin/bash -c "chown -Rf 1000:1000 var/www"
+endif
+	docker-compose exec -T php drush @default.dev status
 	@make provision
 
 download-seed-db:
