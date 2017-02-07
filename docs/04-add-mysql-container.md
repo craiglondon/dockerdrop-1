@@ -27,11 +27,11 @@ Below the above image declaration, add the following:
       MYSQL_PASSWORD: drupal
 ~~~
 
-This sets the root user password for our MySQL installation to `root`, and sets the username, password and databae name for our application database to `drupal`.
+This sets the root user password for our MySQL installation to `root`, and sets the username, password and database name for our application database to `drupal`.
 
 ### 3. Add MySQL startup command line options
  
-We can also add "command line" options when we start our MySQL container and create our database that consist of any options you would normally configure for your MySQL database instance.  In our case, we're going to set the "character set" an "collation" parameters for our database.
+We can also add "command line" options when we start our MySQL container and create our database that consist of any options you would normally configure for your MySQL database instance.  In our case, we're going to set the "character set" and "collation" parameters for our database.
 
 Add the following below the `environment` tag:
 
@@ -70,7 +70,7 @@ When we spin down our application stack with `docker-compose down`, our MySQL co
 
 ### 6.  Add a shared data volume for a seed database
 
-When our MySQL container is started for the first time, a new database with the name `drupal` will be created and initialized with the provided configuration variables for the username and password.  Furthermore, it will execute files with extensions When a container is started for the first time, a new database with the specified name will be created and initialized with the provided configuration variables. Furthermore, it will execute files with extensions `.sh`, `.sql` and `.sql.gz` that are found in the internal path `/docker-entrypoint-initdb.d`.
+When a container is started for the first time, a new database with the specified name will be created and initialized with the provided configuration variables. Furthermore, it will execute files with extensions `.sh`, `.sql` and `.sql.gz` that are found in the internal path `/docker-entrypoint-initdb.d`.
 
 We can use this information to map a shared data volume where we can place a seed database (which we'll create later) that will be imported into our designated database, `drupal`, when our MySQL container starts.
 
