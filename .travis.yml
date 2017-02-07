@@ -16,7 +16,6 @@ install:
   - make init
 
 before_script:
-  - make lint
   - make update-tests
 
 script:

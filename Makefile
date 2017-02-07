@@ -1,10 +1,15 @@
 init:
 	if [ ! -f "data/database.sql" ]; then make download-seed-db; fi
 	docker-compose up -d --build
+	echo "Waiting for database to initialize"; sleep 15
 	docker-compose ps
 	docker-compose exec -T php composer update --working-dir=/var/www/html/www
 	-make update-tests
-	echo "Waiting for database to initialize"; sleep 15
+	chmod a+w www/sites/default
+	cp config/settings/settings.php www/sites/default/settings.php
+	cp config/settings/local.settings.php www/sites/default/local.settings.php
+	mkdir www/sites/default/files
+	chmod a+w www/sites/default/files
 	@make provision
 
 download-seed-db:
@@ -26,14 +31,10 @@ provision:
 	@echo "Resetting cache..."
 	@docker-compose exec -T php drush @default.dev cr
 
-lint:
-	@echo "Running lint checker on php code..."
-	@docker-compose exec -T web php -l www
-
 phpcs:
 	docker-compose exec -T php tests/bin/phpcs --config-set installed_paths tests/vendor/drupal/coder/coder_sniffer
 	# Drupal 8
-	docker-compose exec -T php tests/bin/phpcs --standard=Drupal www/modules/custom/*/* www/themes/custom/*/* --ignore=*.css --ignore=*.css,*.min.js,*features.*.inc,*.svg,*.jpg,*.png,*.json,*.woff*,*.ttf,*.md,*.sh --exclude=Drupal.InfoFiles.AutoAddedKeys
+	docker-compose exec -T php tests/bin/phpcs --standard=Drupal www/modules/* www/themes/* --ignore=*.css --ignore=*.css,*.min.js,*features.*.inc,*.svg,*.jpg,*.png,*.json,*.woff*,*.ttf,*.md,*.sh --exclude=Drupal.InfoFiles.AutoAddedKeys
 
 behat:
 	docker-compose exec -T php tests/bin/behat -c tests/behat.yml --tags=~@failing --colors -f progress
