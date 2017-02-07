@@ -2,7 +2,7 @@ init:
 	if [ ! -f "data/database.sql" ]; then make download-seed-db; fi
 	docker-compose up -d --build
 	docker-compose ps
-	docker-compose exec php composer update --working-dir=/var/www/html/www
+	docker-compose exec -T php composer update --working-dir=/var/www/html/www
 	-make update-tests
 	echo "Waiting for database to initialize"; sleep 15
 	@make provision
