@@ -13,6 +13,7 @@ init:
 ifdef TRAVIS
 	docker-compose exec php /bin/bash -c "chown -Rf 1000:1000 /var/www"
 endif
+	docker-compose exec -T php /bin/bash -c "ls -l /var/www/html/www"
 	docker-compose exec -T php drush @default.dev status
 	@make provision
 
