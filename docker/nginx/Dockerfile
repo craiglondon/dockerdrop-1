@@ -1,4 +1,4 @@
-FROM nginx:1.10.2
+FROM nginx:1.10.3
 
 MAINTAINER Lisa Ridley "lhridley@gmail.com"
 
