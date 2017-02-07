@@ -44,12 +44,12 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
     && cd /usr/local/drush \
     && composer init --require=drush/drush:8.* -n \
     && composer config bin-dir /usr/local/bin \
-    && composer install
+    && composer install \
 
 #RUN php -r "readfile('https://s3.amazonaws.com/files.drush.org/drush-unstable.phar');" > drush \
 #    && chmod +x drush \
 #    && mv drush /usr/local/bin \
-#    && drush init -y
+    && drush init -y
 
 # Add default drush aliases
 RUN mkdir -p /etc/drush/site-aliases
