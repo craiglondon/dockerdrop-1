@@ -27,6 +27,9 @@ services:
       PHP_MAX_EXECUTION_TIME: 120
       PHP_POST_MAX_SIZE: 20M
       PHP_UPLOAD_MAX_FILESIZE: 20M
+      PHP_SITE_NAME: dev
+      PHP_HOST_NAME: localhost:8000
+      PHP_DOCROOT: www
 
   db:
     image: mysql:5.6.34
