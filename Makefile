@@ -15,7 +15,7 @@ ifdef TRAVIS
 	docker-compose exec php /bin/bash -c "chown -Rf 1000:1000 /var/www"
 endif
 	docker-compose exec -T php /bin/bash -c "ls -l /var/www/html/www"
-	docker-compose exec -T php vendor/bin/drush @default.dev status
+	docker-compose exec -T php www/vendor/bin/drush @default.dev status
 	@make provision
 
 download-seed-db:
@@ -27,15 +27,15 @@ down:
 
 provision:
 	@echo "Running database updates..."
-	@docker-compose exec -T php vendor/bin/drush @default.dev updb
+	@docker-compose exec -T php www/vendor/bin/drush @default.dev updb
 	@echo "Running entity updates..."
-	@docker-compose exec -T php vendor/bin/drush @default.dev entup
+	@docker-compose exec -T php www/vendor/bin/drush @default.dev entup
 	@echo "Importing configuration..."
-	@docker-compose exec -T php vendor/bin/php drush @default.dev cim
+	@docker-compose exec -T php www/vendor/bin/drush @default.dev cim
 	@echo "Running reverting features..."
-	-docker-compose exec -T php vendor/bin/drush @default.dev fra
+	-docker-compose exec -T php www/vendor/bin/drush @default.dev fra
 	@echo "Resetting cache..."
-	@docker-compose exec -T php vendor/bin/drush @default.dev cr
+	@docker-compose exec -T php www/vendor/bin/drush @default.dev cr
 
 phpcs:
 	docker-compose exec -T php tests/bin/phpcs --config-set installed_paths tests/vendor/drupal/coder/coder_sniffer
