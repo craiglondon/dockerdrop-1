@@ -37,7 +37,7 @@ provision:
 	@echo "Importing configuration..."
 	@docker-compose exec -T php www/vendor/bin/drush @default.dev cim
 	@echo "Running reverting features..."
-	-docker-compose exec -T php www/vendor/bin/drush @default.dev fra
+	-docker-compose exec -T php www/vendor/bin/drush @default.dev fra -y
 	@echo "Resetting cache..."
 	@docker-compose exec -T php www/vendor/bin/drush @default.dev cr
 
