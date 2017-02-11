@@ -19,4 +19,4 @@ if [ -z "$NGINX_SERVER_NAME" ]; then
 fi
 sed -i 's/SERVER_NAME/'"${NGINX_SERVER_NAME}"'/' /etc/nginx/conf.d/*.conf
 
-exec nginx -g "daemon off;"
+exec "$@"

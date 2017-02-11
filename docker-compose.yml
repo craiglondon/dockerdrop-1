@@ -1,4 +1,4 @@
-version: '2'
+version: '3'
 services:
   web:
     build: ./docker/nginx/
@@ -27,12 +27,13 @@ services:
       PHP_MAX_EXECUTION_TIME: 120
       PHP_POST_MAX_SIZE: 20M
       PHP_UPLOAD_MAX_FILESIZE: 20M
+      # used by Drush Alias
       PHP_SITE_NAME: dev
       PHP_HOST_NAME: localhost:8000
       PHP_DOCROOT: www
 
   db:
-    image: mysql:5.6.34
+    image: mariadb:10.1.21
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: drupal

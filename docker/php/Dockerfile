@@ -25,7 +25,7 @@ RUN apt-get update && apt-get install -y \
 ENV COMPOSER_HOME /composer
 ENV PATH /composer/vendor/bin:$PATH
 ENV COMPOSER_ALLOW_SUPERUSER 1
-ENV COMPOSER_VERSION 1.2.0
+ENV COMPOSER_VERSION 1.2.3
 
 # Setup the Composer installer
 RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
@@ -45,14 +45,11 @@ RUN curl -o /tmp/composer-setup.php https://getcomposer.org/installer \
     && composer init --require=drush/drush:8.* -n \
     && composer config bin-dir /usr/local/bin \
     && composer install \
+    && drush init -y \
+# Set up default location for drush alias files
+    && mkdir -p /etc/drush/site-aliases
 
-#RUN php -r "readfile('https://s3.amazonaws.com/files.drush.org/drush-unstable.phar');" > drush \
-#    && chmod +x drush \
-#    && mv drush /usr/local/bin \
-    && drush init -y
-
-# Add default drush aliases
-RUN mkdir -p /etc/drush/site-aliases
+# Copy drush alias file into image
 COPY default.aliases.drushrc.php /etc/drush/site-aliases/
 
 # Install Mailhog Sendmail support:
@@ -66,8 +63,9 @@ COPY php.ini /usr/local/etc/php/conf.d/php.ini
 
 # Add entrypoint script
 COPY docker-entrypoint.sh /usr/local/bin/
+# Make sure it's executable
 RUN chmod a+x /usr/local/bin/docker-entrypoint.sh
 
-ENTRYPOINT /usr/local/bin/docker-entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/docker-entrypoint.sh"]
 
 CMD ["php-fpm"]
