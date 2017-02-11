@@ -42,13 +42,13 @@ Note:
 
 * Git, for your operating system
 * Your favorite IDE / code editor
-* If you want to join the Slack channel (we will provide a link during the class) using a desktop client, install the desktop Slack client for your operating system:  https://slack.com/downloads
+* We will be using a Slack Channel to share gists during the workshop; if you didn't receive an invitation, see your instructor.  Slack has a web UI available.  If you want to join the Slack channel (we will provide a link during the class) using a desktop client, install the desktop Slack client for your operating system:  https://slack.com/downloads
 
 > * This is an optional installation.
 > * If you prefer, you can use the web interface for Slack.
 
 * A Github account, with a public key linked to the account for pushing code from your computer.
-* A Travis-ci.org account (for the Travis integration / CI/CD portion of the training workshop)
-* A Docker Hub account (https://hub.docker.com/)
+* A Travis-ci.org account (for the Travis integration / CI/CD portion of the training workshop), linked to your Github account
+* A Docker Hub account (https://hub.docker.com/), linked to your GitHub account.
 
 <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/"><img alt="Creative Commons License" style="border-width:0" src="https://i.creativecommons.org/l/by-sa/4.0/88x31.png" /></a><br />The instructional materials, which includes any materials in this repository included in markdown (.md) and/or text (.txt) files, are licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
