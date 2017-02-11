@@ -750,6 +750,6 @@ $settings['file_scan_ignore_directories'] = [
  * Keep this code block at the end of this file to take full effect.
  */
 #
-if (file_exists('../config/settings/local.settings.php')) {
- include '../config/settings/local.settings.php';
+if (file_exists('../config/settings/settings.local.php')) {
+ include '../config/settings/settings.local.php';
 }

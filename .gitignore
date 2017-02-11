@@ -1,4 +1,4 @@
 www/bin
 www/config/active
 *.sql
-www/sites/default/*.settings.php
+www/sites/default/settings.*.php
