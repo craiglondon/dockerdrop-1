@@ -3,7 +3,7 @@ init:
 	if [ ! -f "config/settings/settings.php" ] || [ ! -f "config/settings.settings.local.php" ]; then make download-drupal-settings; fi
 	if [ ! -d "tests" ]; then make download-behat-tests; fi
 	if [ ! -d "config/sync" ]; then make download-drupal-config; fi
-    if [ ! -f "www/composer.json" ]; then make download-drupal-site; fi
+	if [ ! -f "www/composer.json" ]; then make download-drupal-site; fi
 	docker-compose up -d --build
 	echo "Waiting for database to initialize"; sleep 15
 	docker-compose ps
