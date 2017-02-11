@@ -20,6 +20,8 @@ See the Installation instructions for your flavor of Linux at the link above.
 
 * Install Docker-Compose:  https://docs.docker.com/compose/install/
 
+* Install Make (we will be using a Makefile as part of this class)
+
 ### Mac OS X Users
 
 * Install Docker for Mac:  https://docs.docker.com/engine/installation/mac/
@@ -33,6 +35,8 @@ macOS 10.10.3 Yosemite or newer
 ### Windows 10 Users
 
 * Install Docker for Windows:  https://docs.docker.com/engine/installation/windows/
+* If you're running an up to date version of Windows 10 (you have the Anniversary Update installed), install the Linux Bash Shell:  http://www.howtogeek.com/249966/how-to-install-and-use-the-linux-bash-shell-on-windows-10/
+* If "make" is not available in the Linux Bash Shell, install it with `sudo apt-get install make` or `sudo apt-get install build-essential` 
 
 Note:
 > * 64bit Windows 10 Pro, Enterprise and Education (1511 November update, Build 10586 or later).
