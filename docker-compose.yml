@@ -9,6 +9,7 @@ services:
     depends_on:
       - php
     environment:
+      #Make this the same for PHP
       NGINX_DOCROOT: www
       NGINX_SERVER_NAME: localhost
       # Set to the same as the PHP_POST_MAX_SIZE, but use lowercase "m"
@@ -25,11 +26,14 @@ services:
     environment:
       PHP_MEMORY_LIMIT: 256M
       PHP_MAX_EXECUTION_TIME: 120
+      # If you set this,make sure you also set it for Nginx
       PHP_POST_MAX_SIZE: 20M
       PHP_UPLOAD_MAX_FILESIZE: 20M
-      # used by Drush Alias
+      # used by Drush Alias; if not specified Drush defaults to dev
       PHP_SITE_NAME: dev
+      # used by Drush alias; if not specified Drush defaults to localhost:8000
       PHP_HOST_NAME: localhost:8000
+      # Make this the same for Nginx
       PHP_DOCROOT: www
 
   db:
@@ -54,16 +58,16 @@ services:
   selenium:
     image: selenium/standalone-firefox:2.53.0
 
-  pma:
-    image: phpmyadmin/phpmyadmin
-    environment:
-      PMA_HOST: db
-      PMA_USER: drupal
-      PMA_PASSWORD: drupal
-      PHP_UPLOAD_MAX_FILESIZE: 1G
-      PHP_MAX_INPUT_VARS: 1G
-    ports:
-      - "8001:80"
+#  pma:
+#    image: phpmyadmin/phpmyadmin
+#    environment:
+#      PMA_HOST: db
+#     PMA_USER: drupal
+#      PMA_PASSWORD: drupal
+#      PHP_UPLOAD_MAX_FILESIZE: 1G
+#      PHP_MAX_INPUT_VARS: 1G
+#    ports:
+#      - "8001:80"
 
 volumes:
   mysql-data:
