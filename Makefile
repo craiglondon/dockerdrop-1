@@ -1,5 +1,9 @@
 init:
 	if [ ! -f "data/database.sql" ]; then make download-seed-db; fi
+	if [ ! -f "config/settings/settings.php" ] || [ ! -f "config/settings.settings.local.php" ]; then make download-drupal-settings; fi
+	if [ ! -d "tests" ]; then make download-behat-tests; fi
+	if [ ! -d "config/sync" ]; then make download-drupal-config; fi
+    if [ ! -f "www/composer.json" ]; then make download-drupal-site; fi
 	docker-compose up -d --build
 	echo "Waiting for database to initialize"; sleep 15
 	docker-compose ps
@@ -48,3 +52,21 @@ behat:
 update-tests:
 	docker-compose exec -T php composer update --working-dir=/var/www/html/tests
 	docker-compose exec -T php tests/bin/behat -c tests/behat.yml --init
+
+download-drupal-settings:
+	curl -o config/settings/settings.php https://s3.us-east-2.amazonaws.com/dockerdrop/settings.php
+	curl -o config/settings/settings.local.php https://s3.us-east-2.amazonaws.com/dockerdrop/settings.local.php
+
+download-drupal-site:
+	rm -Rf www
+	git clone --depth=1 https://github.com/codementality/drupal8-standard.git www
+	rm -Rf www/.git
+
+download-drupal-config:
+	git clone --depth=1 https://github.com/codementality/dockerdrop-config.git config/sync
+	rm -Rf config/sync/.git
+
+download-behat-tests:
+	git clone --depth=1 https://github.com/codementality/dockerdrop-tests.git tests
+	rm -Rf tests/.git
+	curl -o .travis.yml https://s3.us-east-2.amazonaws.com/dockerdrop/traviscfg.yml
