@@ -29,6 +29,9 @@ down:
 	docker-compose down
 	docker-compose ps
 
+clean-data:
+	docker volume rm dockerdrop_db
+
 provision:
 	@echo "Running database updates..."
 	@docker-compose exec -T php www/vendor/bin/drush @default.dev updb
