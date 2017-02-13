@@ -50,8 +50,6 @@ services:
 
   mailhog:
     image: mailhog/mailhog:latest
-    expose:
-     - "1025"
     ports:
       - "8002:8025"
 
