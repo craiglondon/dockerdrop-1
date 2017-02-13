@@ -4,9 +4,8 @@ init:
 	if [ ! -d "tests" ]; then make download-behat-tests; fi
 	if [ ! -d "config/sync" ]; then make download-drupal-config; fi
 	if [ ! -f "www/composer.json" ]; then make download-drupal-site; fi
-	docker-compose up -d --build
+	make up
 	echo "Waiting for database to initialize"; sleep 15
-	docker-compose ps
 	docker-compose exec -T php composer require drush/drush:8.* -n --working-dir=/var/www/html/www
 	docker-compose exec -T php composer update --working-dir=/var/www/html/www
 	-make update-tests
@@ -24,6 +23,10 @@ endif
 
 download-seed-db:
 	curl -o data/database.sql https://s3.us-east-2.amazonaws.com/dockerdrop/database.sql
+
+up:
+	docker-compose up -d --build
+	docker-compose ps
 
 down:
 	docker-compose down
